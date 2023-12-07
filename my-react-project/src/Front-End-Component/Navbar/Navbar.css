@@ -1,0 +1,28 @@
+
+
+  /********** Template CSS **********/
+:root {
+  --primary: #ffffff;
+  --secondary: #FF6922;
+  --light: #EFFDF5;
+  --dark: #ff7e06;
+}
+
+.Nav-Link {
+ 
+ margin-left: 2px;
+ margin-right: 2px;
+ text-decoration: none;
+  color: #000000;
+}
+
+.Nav-Link:hover,
+.Nav-Link.active {
+  background-color: rgb(8, 157, 73);
+  color: var(--primary);
+  background-color: rgb(8, 157, 73);
+  border-radius: 7px;
+}
+
+
+
