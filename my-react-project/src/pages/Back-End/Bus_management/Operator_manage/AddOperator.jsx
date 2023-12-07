@@ -1,70 +1,54 @@
-import {  useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Dahsbord from '../../Dashbord/Dashbord';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 
 const AddOperator = () => {
-    
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [logo, setLogo] = useState('');
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [address, setAddress] = useState('');
+    const [file, setFile] = useState('');
 
 
-//   const handleFileChange = (e) => {
-//     ;
-//   };
- 
-  
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
 
-  async function handleSubmit() {
+        if (!name || !email || !phone || !address || !file) {
+            alert("Please fill in all fields");
+            return;
+        }
+        //let item = { name, email, phone, address, logo };
 
-    if (!name || !email || !phone || !address || !logo ) {
-      alert("Please fill in all fields");
-      return;
-  }
-    //let item = { name, email, phone, address, logo };
-    
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('address', address);
-    formData.append('logo', logo,logo.name);
-   
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('phone', phone);
+        formData.append('address', address);
+        formData.append('file', file);
 
-    
-    //   let result = await fetch("", {
 
-    await axios.post('http://localhost:8000/api/add-Operator',
-        // body: JSON.stringify(item),
-         formData,
-        // headers: {
-        //   "Content-Type": "application/json",
-        //   "Accept": "application/json"
-        // }
-       { headers: 
-            {
-            "Content-type": "multipart/form-data",
-        },
-     }) .then(res => {
-        console.log(res)
-    })
-    .catch(err => {
- 
-        console.log(err);
-    })
-    //   });
 
-    //   result = await result.json();
-    //   console.warn("result", result);
-        // const response = await result.json();
-        // console.log(response);
-    
-}
+        try {
+            const response = await axios.post('http://localhost:8000/api/add-Operator',
+                formData,
+                {
+                    headers:
+                    {
+                        "Content-type": "multipart/form-data",
+                    },
+                }
+            );
+            console.log('response:', response.data);
+        }
+        catch (error) {
+
+            console.error('Error:', error);
+        }
+    }
 
 
     return (
@@ -123,65 +107,66 @@ const AddOperator = () => {
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                
+
                                 <h1 className="modal-title fs-5" id="exampleModalLabel">Add Operator</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                <form  onSubmit={handleSubmit} encType="multipart/form-data" >
+                                <form onSubmit={handleSubmit} encType="multipart/form-data" >
                                     <div className="mb-3">
                                         <label htmlFor="recipient-name" className="col-form-label">Operator Name:</label>
-                                        <input 
+                                        <input
                                             value={name}
-                                            onChange={(e) => setName(e.target.value)} 
+                                            onChange={(e) => setName(e.target.value)}
                                             type="text"
-                                            className="form-control" 
+                                            className="form-control"
                                             id="recipient-name" />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="recipient-email" className="col-form-label">Email:</label>
-                                        <input 
+                                        <input
                                             value={email}
-                                            onChange={(e) => setEmail(e.target.value)} 
+                                            onChange={(e) => setEmail(e.target.value)}
                                             type="text"
-                                            className="form-control" 
+                                            className="form-control"
                                             id="recipient-email" />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="recipient-phone" className="col-form-label">Phone:</label>
-                                        <input 
+                                        <input
                                             value={phone}
-                                            onChange={(e) => setPhone(e.target.value)} 
+                                            onChange={(e) => setPhone(e.target.value)}
                                             type="text"
-                                            className="form-control" 
+                                            className="form-control"
                                             id="recipient-phone" />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="recipient-logo" className="col-form-label">Logo:</label>
-                                        <input 
-                                            
-                                            
-                                            onChange={(e)=>setLogo(e.target.files[0])}
+                                        <input
+
+
+                                            onChange={(e) => setFile(e.target.files[0])}
                                             type="file"
-                                            className="form-control" 
+                                            className="form-control"
                                             id="recipient-logo" />
                                     </div>
-                                    
+
                                     <div className="mb-3">
                                         <label htmlFor="message-text" className="col-form-label">Address:</label>
-                                        <textarea 
+                                        <textarea
                                             value={address}
-                                            onChange={(e) => setAddress(e.target.value)} 
-                                            className="form-control" 
+                                            onChange={(e) => setAddress(e.target.value)}
+                                            className="form-control"
                                             id="message-text">
-                                                
+
                                         </textarea>
                                     </div>
+
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" className="btn btn-primary">Submit</button>
+                                    </div>
                                 </form>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button   type="submit" className="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </div>

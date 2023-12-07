@@ -22,5 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/register', [UserController::class,'register']);
 Route::post('/login', [UserController::class,'login']);
 Route::post('/add-Operator', [OperatorController::class,'add_operator']);
+Route::get('/view-Operator', [OperatorController::class,'viewOperator']);
+
 
 

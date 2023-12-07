@@ -18,17 +18,18 @@ class OperatorController extends Controller
         $operator->operator_email=$request->email;
         $operator->operator_phone=$request->phone;
         $operator->operator_address=$request->address;
-        
-       
         // $operator->operator_logo = $request->file('images')->store("operator_images");
-        
         $image = $request->file;
         $imageName = time() . '.' . $image->getClientOriginalExtension();
         $request->file->move('operator_images', $imageName);
         $operator->operator_logo=$imageName;
-
         // $operator->status=$request->status;
         $operator->save();
+        return $operator;
+    }
+
+    function viewOperator (){
+        $operator=Operator::all();
         return $operator;
     }
 }
