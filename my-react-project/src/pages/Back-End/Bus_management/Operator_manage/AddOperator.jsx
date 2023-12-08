@@ -5,7 +5,33 @@ import axios from 'axios';
 
 
 const AddOperator = () => {
+ //this for get operator
+// const [data,setData]=useState([]);
+// useEffect(async ()=>{
+//     let result= await fetch("http://localhost:8000/api/view-Operator");
+//     result= await result.json();
+//     setData(result)
+    
+// },[])
+// console.warn("result",data)
+const [data, setData] = useState([]);
 
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      let result = await fetch("http://localhost:8000/api/view-Operator");
+      result = await result.json();
+      setData(result);
+    //   console.warn("result", result);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, []); 
+
+    //this for post operator
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -69,31 +95,41 @@ const AddOperator = () => {
                             <thead className="table-light">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">First</th>
-                                    <th scope="col">Math</th>
-                                    <th scope="col">English</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Logo</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody className="table-group-divider">
-                                <tr>
+                            {
+                                    data.map((item)=>(
+                                <tr key={item.id}>
+                                
                                     <th scope="row">
-                                        jshi
+                                        {item.id}
                                     </th>
                                     <td>
-                                        dasf
+                                        {item.operator_name}
                                     </td>
                                     <td>
-                                        afd
+                                        {item.operator_email}
                                     </td>
                                     <td>
-                                        dfd
+                                       {item.operator_phone}
+                                    </td>
+                                    <td>
+                                        <img src={`http://127.0.0.1:8000/public/operator_images/${item.operator_logo}`} alt="" />
                                     </td>
                                     <td>
                                         <a href="">Edit</a>
                                         <a href="">Delete</a>
                                     </td>
+                                 
                                 </tr>
+                                   ))
+                                }
                             </tbody>
                         </table>
                     </div>
