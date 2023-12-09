@@ -4,44 +4,61 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 
+
+
 const AddOperator = () => {
- //this for get operator
-// const [data,setData]=useState([]);
-// useEffect(async ()=>{
-//     let result= await fetch("http://localhost:8000/api/view-Operator");
-//     result= await result.json();
-//     setData(result)
+
+
+
+    //--------------------------------this for get operator-----------------------------------------------------------
+
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let result = await fetch("http://localhost:8000/api/view-Operator");
+                result = await result.json();
+                setData(result);
+                //   console.warn("result", result);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+
+
+    //--------------------------------this for Delete operator-----------------------------------------------------------
+
+    async function deleteOperation(e, id) {
+        e.preventDefault();
     
-// },[])
-// console.warn("result",data)
-const [data, setData] = useState([]);
+        let result = await fetch("http://localhost:8000/api/delete-Operator/" + id, {
+            method: 'DELETE'
+        });
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      let result = await fetch("http://localhost:8000/api/view-Operator");
-      result = await result.json();
-      setData(result);
-    //   console.warn("result", result);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+        result = await result.json();
     }
-  };
+    
+    
 
-  fetchData();
-}, []); 
 
-    //this for post operator
+
+
+    //-------------------------------this for post operator------------------------------------------------------------
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
     const [file, setFile] = useState('');
 
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
         if (!name || !email || !phone || !address || !file) {
             alert("Please fill in all fields");
@@ -55,7 +72,6 @@ useEffect(() => {
         formData.append('phone', phone);
         formData.append('address', address);
         formData.append('file', file);
-
 
 
         try {
@@ -103,32 +119,33 @@ useEffect(() => {
                                 </tr>
                             </thead>
                             <tbody className="table-group-divider">
-                            {
-                                    data.map((item)=>(
-                                <tr key={item.id}>
-                                
-                                    <th scope="row">
-                                        {item.id}
-                                    </th>
-                                    <td>
-                                        {item.operator_name}
-                                    </td>
-                                    <td>
-                                        {item.operator_email}
-                                    </td>
-                                    <td>
-                                       {item.operator_phone}
-                                    </td>
-                                    <td>
-                                        <img src={`http://127.0.0.1:8000/public/operator_images/${item.operator_logo}`} alt="" />
-                                    </td>
-                                    <td>
-                                        <a href="">Edit</a>
-                                        <a href="">Delete</a>
-                                    </td>
-                                 
-                                </tr>
-                                   ))
+                                {
+                                    data.map((item) => (
+                                        <tr key={item.id}>
+
+                                            <th scope="row">
+                                                {item.id}
+                                            </th>
+                                            <td>
+                                                {item.operator_name}
+                                            </td>
+                                            <td>
+                                                {item.operator_email}
+                                            </td>
+                                            <td>
+                                                {item.operator_phone}
+                                            </td>
+                                            <td>
+                                                <img width="100px" height="100px" src={`http://127.0.0.1:8000/${item.operator_logo}`} alt="" />
+
+                                            </td>
+                                            <td>
+                                                <a onClick={(e) => deleteOperation(e ,item.id)}>Delete</a>
+                                                {/* <a href="">Delete</a> */}
+                                            </td>
+
+                                        </tr>
+                                    ))
                                 }
                             </tbody>
                         </table>

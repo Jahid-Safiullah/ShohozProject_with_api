@@ -32,4 +32,16 @@ class OperatorController extends Controller
         $operator=Operator::all();
         return $operator;
     }
+
+
+    function deleteOperator($id){
+        $operatorData=Operator::find($id)->delete();
+        if($operatorData){
+            return("product has been deleted");
+        }
+        else{
+            return("product has not been deleted");
+        }
+      
+    }
 }
