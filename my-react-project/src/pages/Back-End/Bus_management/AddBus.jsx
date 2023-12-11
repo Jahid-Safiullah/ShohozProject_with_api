@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-import {Link, RouterProvider } from "react-router-dom";
+import { Link, RouterProvider } from "react-router-dom";
 import Dashbord from '../Dashbord/Dashbord';
 
 
@@ -21,9 +21,9 @@ export default function AddBus() {
       return `The fruit name is not long: ${fruit}`;
     }
   };
-  const Math=39;
-  const English=42;
-  const Result=30;
+  const Math = 39;
+  const English = 42;
+  const Result = 30;
   return (
     <>
       <div className='container-fluid d-flex' >
@@ -31,10 +31,145 @@ export default function AddBus() {
           <Dashbord />
         </div>
 
+
         <div className='bg-white col-md-9' style={{ marginTop: "88px" }} >
-     
-        <Link to="/AddOperator"><i className="fa fa-bus"></i>Add Bus Operator</Link>
-       
+          {/* Bus Dashbord */}
+          <div className='container card mt-3 mb-4'>
+            <div className='card-body'>
+              <div className='card-title'> Bus Dashbord</div>
+              <div className='row'>
+
+                <div className=" col-12 col-md-3  ">
+                  <div className='row  m-1  rounded shadow p-3 mb-5 bg-body '>
+                    <div className='col-8 p-2 bg-info rounded'>Booking</div>
+                    <div className='col-4'>img</div>
+                    <div className='row'>
+                      <div className='col-12'>Total Booking</div>
+                      <div className='col-12'>2</div>
+                      <div className='col-12 ' style={{textAlign:"end"}}>Vew More..</div>
+                    </div>
+                  </div>
+                </div>
+                <div className=" col-12  col-md-3 ">
+                  <div className='row  m-1  rounded shadow p-3 mb-5 bg-body '>
+                    <div className='col-8 p-2 bg-info rounded'>Buses</div>
+                    <div className='col-4'>img</div>
+                    <div className='row'>
+                      <div className='col-12'>Total Booking</div>
+                      <div className='col-12'>2</div>
+                      <div className='col-12'>Vew More..</div>
+                    </div>
+                  </div>
+                </div>
+                <div className=" col-12  col-md-3 ">
+                  <div className='row  m-1  rounded shadow p-3 mb-5 bg-body '>
+                    <div className='col-8 p-2 bg-info rounded'>Routes</div>
+                    <div className='col-4'>img</div>
+                    <div className='row'>
+                      <div className='col-12'>Total Booking</div>
+                      <div className='col-12'>2</div>
+                      <div className='col-12'>Vew More..</div>
+                    </div>
+                  </div>
+                </div>
+                <div className=" col-12   col-md-3 ">
+                  <div className='row  m-1  rounded shadow p-3 mb-5 bg-body '>
+                    <div className='col-8 p-2 bg-info rounded'>Customers</div>
+                    <div className='col-4'>img</div>
+                    <div className='row'>
+                      <div className='col-12'>Total Booking</div>
+                      <div className='col-12'>2</div>
+                      <div className='col-12'>Vew More..</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          {/* bUS Management */}
+
+
+          <div className='container card '>
+            <div className='card-body'>
+              <div className='card-title'> Bus Management</div>
+              <div className='row '>
+                <div className=" col-12  col-md-3 ">
+                  <div className='row  m-1 rounded shadow p-3 mb-5 bg-body'>
+                    <div className='col col-md-6 bg-danger rounded'>
+                    Lorem ipsum, 
+                    </div>
+                    <div className='col col-md-6'>
+                      <div className='row bg-success rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                      <div className='row  bg-warning rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                      <div className='row bg-info rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className=" col-12  col-md-3 ">
+                  <div className='row  m-1 rounded shadow p-3 mb-5 bg-body'>
+                    <div className='col col-md-6 bg-danger rounded'>Lorem ipsum,</div>
+                    <div className='col col-md-6'>
+                      <div className='row bg-success rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                      <div className='row  bg-warning rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                      <div className='row bg-info rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className=" col-12  col-md-3 ">
+                  <div className='row  m-1 rounded shadow p-3 mb-5 bg-body'>
+                    <div className='col col-md-6 bg-danger rounded'>Lorem ipsum, </div>
+                    <div className='col col-md-6'>
+                      <div className='row bg-success rounded'>
+                        <div className='col'>Lorem</div>
+                      </div>
+                      <div className='row  bg-warning rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                      <div className='row bg-info rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className=" col-12  col-md-3 ">
+                  <div className='row  m-1 rounded shadow p-3 mb-5 bg-body'>
+                    <div className='col col-md-6 bg-danger rounded'>Lorem ipsum,</div>
+                    <div className='col col-md-6'>
+                      <div className='row bg-success rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                      <div className='row  bg-warning rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                      <div className='row bg-info rounded'>
+                        <div className='col'>Lorem </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <Link to="/AddOperator"><i className="fa fa-bus"></i>Add Bus Operator</Link>
+
           <div className="text-end p-3">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Add Bus</button>
           </div>
@@ -53,14 +188,14 @@ export default function AddBus() {
               <tbody class="table-group-divider">
                 <tr>
                   <th scope="row">
-                  <ul>
-                    {fruits.map((fruit, index) => (
-                      <li key={index.toString()}>
-                        {/* Invoke the function and display the result */}
-                        {customFunction(fruit, index)}
-                      </li>
-                    ))}
-                  </ul>
+                    <ul>
+                      {fruits.map((fruit, index) => (
+                        <li key={index.toString()}>
+                          {/* Invoke the function and display the result */}
+                          {customFunction(fruit, index)}
+                        </li>
+                      ))}
+                    </ul>
                   </th>
                   <td>
                     <select>
@@ -71,26 +206,26 @@ export default function AddBus() {
                   </td>
                   <td>
                     {
-                      Math>=40? <h1>Pass</h1> : <h1>Fail</h1>
+                      Math >= 40 ? <h1>Pass</h1> : <h1>Fail</h1>
                     }
                   </td>
                   <td>
                     {
-                     (()=>{
-                      if(Result >=80 && Result<=100){
-                        return <h1>A+</h1>
-                      }
-                      else if(Result >=60 && Result<80){
-                        return <h1>B</h1>
-                      }
-                      else if(Result >=40 && Result<60){
-                        return <h1>D</h1>
-                      }
-                      else{
-                        return <h1>F</h1>
-                      }
+                      (() => {
+                        if (Result >= 80 && Result <= 100) {
+                          return <h1>A+</h1>
+                        }
+                        else if (Result >= 60 && Result < 80) {
+                          return <h1>B</h1>
+                        }
+                        else if (Result >= 40 && Result < 60) {
+                          return <h1>D</h1>
+                        }
+                        else {
+                          return <h1>F</h1>
+                        }
 
-                     })()
+                      })()
                     }
 
                   </td>
