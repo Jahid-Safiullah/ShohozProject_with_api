@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 
-const AddOperator = () => {
+const AddBus = () => {
 
 
 
@@ -149,12 +149,7 @@ const AddOperator = () => {
                                 }
                             </tbody>
                         </table>
-                       
                     </div>
-                   
-                    <button className='mt-2 rounded '>
-                    <Link to="/BusBookingList"><i class="fa-solid fa-backward fa-xl"></i>Back</Link>
-                    </button>
 
                 </div>
 
@@ -166,13 +161,13 @@ const AddOperator = () => {
                         <div className="modal-content">
                             <div className="modal-header">
 
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">Add Operator</h1>
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Add Bus</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
                                 <form onSubmit={handleSubmit} encType="multipart/form-data" >
                                     <div className="mb-3">
-                                        <label htmlFor="recipient-name" className="col-form-label">Operator Name:</label>
+                                        <label htmlFor="recipient-name" className="col-form-label">Bus Name:</label>
                                         <input
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
@@ -180,45 +175,28 @@ const AddOperator = () => {
                                             className="form-control"
                                             id="recipient-name" />
                                     </div>
+                                    
                                     <div className="mb-3">
-                                        <label htmlFor="recipient-email" className="col-form-label">Email:</label>
+                                        <label htmlFor="bus-licence" className="col-form-label">Bus Licence</label>
                                         <input
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            type="text"
-                                            className="form-control"
-                                            id="recipient-email" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="recipient-phone" className="col-form-label">Phone:</label>
-                                        <input
-                                            value={phone}
+                                            value={licence}
                                             onChange={(e) => setPhone(e.target.value)}
                                             type="text"
                                             className="form-control"
-                                            id="recipient-phone" />
+                                            id="bus-licence" />
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="recipient-logo" className="col-form-label">Logo:</label>
+                                        <label htmlFor="bus-image" className="col-form-label">Image:</label>
                                         <input
 
 
                                             onChange={(e) => setFile(e.target.files[0])}
                                             type="file"
                                             className="form-control"
-                                            id="recipient-logo" />
+                                            id="bus-image" />
                                     </div>
 
-                                    <div className="mb-3">
-                                        <label htmlFor="message-text" className="col-form-label">Address:</label>
-                                        <textarea
-                                            value={address}
-                                            onChange={(e) => setAddress(e.target.value)}
-                                            className="form-control"
-                                            id="message-text">
-
-                                        </textarea>
-                                    </div>
+                                   
 
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -234,4 +212,4 @@ const AddOperator = () => {
     );
 };
 
-export default AddOperator;
+export default AddBus;

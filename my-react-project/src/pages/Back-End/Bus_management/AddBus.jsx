@@ -1,6 +1,6 @@
 import React from 'react'
 
-
+import { useEffect, useState } from 'react';
 import { Link, RouterProvider } from "react-router-dom";
 import Dashbord from '../Dashbord/Dashbord';
 
@@ -9,6 +9,50 @@ import Dashbord from '../Dashbord/Dashbord';
 
 
 export default function AddBus() {
+
+
+
+  const [name, setName] = useState('');
+    const [licence, setLicence] = useState('');
+    const [file, setFile] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (!name || !licence  || !file) {
+            alert("Please fill in all fields");
+            return;
+        }
+        //let item = { name, email, phone, address, logo };
+
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('phone', licence);
+        formData.append('file', file);
+
+
+        try {
+            const response = await axios.post('http://localhost:8000/api/add-Operator',
+                formData,
+                {
+                    headers:
+                    {
+                        "Content-type": "multipart/form-data",
+                    },
+                }
+            );
+            console.log('response:', response.data);
+        }
+        catch (error) {
+
+            console.error('Error:', error);
+        }
+    }
+
+
+
+
+
   const fruits = ['aam', 'jam', 'kola', 'lichu', 'kathal'];
   const customFunction = (fruit, index) => {
     // Perform some logic (check if the length is greater than 5)
@@ -98,66 +142,76 @@ export default function AddBus() {
               <div className='row '>
                 <div className=" col-12  col-md-3 ">
                   <div className='row  m-1 rounded shadow p-3 mb-5 bg-body'>
-                    <div className='col col-md-6 bg-danger rounded'>
-                    Lorem ipsum, 
+                    <div className='col col-md-9 bg-danger rounded'>
+                    Operator 
                     </div>
-                    <div className='col col-md-6'>
-                      <div className='row bg-success rounded'>
-                        <div className='col'>Lorem </div>
+                    <div className='col col-md-3'>
+                      <div className='row bg-light rounded'>
+                        <div className='col'><Link to="/AddOperator"><i class="fa-sharp fa-solid fa-circle-plus fa-lg" ></i></Link> </div>
                       </div>
-                      <div className='row  bg-warning rounded'>
-                        <div className='col'>Lorem </div>
+                      <div className='row  bg-light rounded'>
+                        <div className='col'><Link to="/viewOperator"><i class="fa-regular fa-eye fa-lg"></i></Link> </div>
                       </div>
-                      <div className='row bg-info rounded'>
-                        <div className='col'>Lorem </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className=" col-12  col-md-3 ">
-                  <div className='row  m-1 rounded shadow p-3 mb-5 bg-body'>
-                    <div className='col col-md-6 bg-danger rounded'>Lorem ipsum,</div>
-                    <div className='col col-md-6'>
-                      <div className='row bg-success rounded'>
-                        <div className='col'>Lorem </div>
-                      </div>
-                      <div className='row  bg-warning rounded'>
-                        <div className='col'>Lorem </div>
-                      </div>
-                      <div className='row bg-info rounded'>
-                        <div className='col'>Lorem </div>
+                      <div className='row bg-light rounded'>
+                        <div className='col'><Link to="/printOperator"><i class="fa-solid fa-print fa-lg"></i></Link> </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className=" col-12  col-md-3 ">
                   <div className='row  m-1 rounded shadow p-3 mb-5 bg-body'>
-                    <div className='col col-md-6 bg-danger rounded'>Lorem ipsum, </div>
-                    <div className='col col-md-6'>
-                      <div className='row bg-success rounded'>
-                        <div className='col'>Lorem</div>
+                    <div className='col col-md-9 bg-danger rounded'>
+                    Operator 
+                    </div>
+                    <div className='col col-md-3'>
+                      <div className='row bg-light rounded'>
+                        <div className='col'> 
+                        <button type="button"  data-bs-toggle="modal" data-bs-target="#busModel" data-bs-whatever="@getbootstrap">
+                          <i class="fa-sharp fa-solid fa-circle-plus fa-lg" ></i>
+                          </button>
+                        </div>
                       </div>
-                      <div className='row  bg-warning rounded'>
-                        <div className='col'>Lorem </div>
+                      <div className='row  bg-light rounded'>
+                        <div className='col'><Link to="/viewOperator"><i class="fa-regular fa-eye fa-lg"></i></Link> </div>
                       </div>
-                      <div className='row bg-info rounded'>
-                        <div className='col'>Lorem </div>
+                      <div className='row bg-light rounded'>
+                        <div className='col'><Link to="/printOperator"><i class="fa-solid fa-print fa-lg"></i></Link> </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className=" col-12  col-md-3 ">
                   <div className='row  m-1 rounded shadow p-3 mb-5 bg-body'>
-                    <div className='col col-md-6 bg-danger rounded'>Lorem ipsum,</div>
-                    <div className='col col-md-6'>
-                      <div className='row bg-success rounded'>
-                        <div className='col'>Lorem </div>
+                    <div className='col col-md-9 bg-danger rounded'>
+                    Operator 
+                    </div>
+                    <div className='col col-md-3'>
+                      <div className='row bg-light rounded'>
+                        <div className='col'><Link to="/AddOperator"><i class="fa-sharp fa-solid fa-circle-plus fa-lg" ></i></Link> </div>
                       </div>
-                      <div className='row  bg-warning rounded'>
-                        <div className='col'>Lorem </div>
+                      <div className='row  bg-light rounded'>
+                        <div className='col'><Link to="/viewOperator"><i class="fa-regular fa-eye fa-lg"></i></Link> </div>
                       </div>
-                      <div className='row bg-info rounded'>
-                        <div className='col'>Lorem </div>
+                      <div className='row bg-light rounded'>
+                        <div className='col'><Link to="/printOperator"><i class="fa-solid fa-print fa-lg"></i></Link> </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className=" col-12  col-md-3 ">
+                  <div className='row  m-1 rounded shadow p-3 mb-5 bg-body'>
+                    <div className='col col-md-9 bg-danger rounded'>
+                    Operator 
+                    </div>
+                    <div className='col col-md-3'>
+                      <div className='row bg-light rounded'>
+                        <div className='col'><Link to="/AddOperator"><i class="fa-sharp fa-solid fa-circle-plus fa-lg" ></i></Link> </div>
+                      </div>
+                      <div className='row  bg-light rounded'>
+                        <div className='col'><Link to="/viewOperator"><i class="fa-regular fa-eye fa-lg"></i></Link> </div>
+                      </div>
+                      <div className='row bg-light rounded'>
+                        <div className='col'><Link to="/printOperator"><i class="fa-solid fa-print fa-lg"></i></Link> </div>
                       </div>
                     </div>
                   </div>
@@ -168,7 +222,7 @@ export default function AddBus() {
             </div>
           </div>
 
-          <Link to="/AddOperator"><i className="fa fa-bus"></i>Add Bus Operator</Link>
+          
 
           <div className="text-end p-3">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Add Bus</button>
@@ -269,6 +323,56 @@ export default function AddBus() {
             </div>
           </div>
         </div>
+         {/* Modal */}
+         <div className="modal fade" id="busModel" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">Add Bus</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <form onSubmit={handleSubmit} encType="multipart/form-data" >
+                                    <div className="mb-3">
+                                        <label htmlFor="recipient-name" className="col-form-label">Bus Name:</label>
+                                        <input
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            type="text"
+                                            className="form-control"
+                                            id="recipient-name" />
+                                    </div>
+                                    
+                                    <div className="mb-3">
+                                        <label htmlFor="bus-licence" className="col-form-label">Bus Licence</label>
+                                        <input
+                                            value={licence}
+                                            onChange={(e) => setLicence(e.target.value)}
+                                            type="text"
+                                            className="form-control"
+                                            id="bus-licence" />
+                                    </div>
+                                    <div className="mb-3">
+                                        <label htmlFor="bus-image" className="col-form-label">Image:</label>
+                                        <input
+                                            onChange={(e) => setFile(e.target.files[0])}
+                                            type="file"
+                                            className="form-control"
+                                            id="bus-image" />
+                                    </div>
+
+                                   
+
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" className="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
       </div>
     </>
   )
