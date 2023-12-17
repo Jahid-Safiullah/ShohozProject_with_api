@@ -75,7 +75,7 @@ const AddOperator = () => {
 
 
         try {
-            const response = await axios.post('http://localhost:8000/api/add-Operator',
+            const response = await axios.post('http://localhost:8000/api/add-Bus',
                 formData,
                 {
                     headers:
@@ -201,8 +201,6 @@ const AddOperator = () => {
                                     <div className="mb-3">
                                         <label htmlFor="recipient-logo" className="col-form-label">Logo:</label>
                                         <input
-
-
                                             onChange={(e) => setFile(e.target.files[0])}
                                             type="file"
                                             className="form-control"
@@ -216,7 +214,6 @@ const AddOperator = () => {
                                             onChange={(e) => setAddress(e.target.value)}
                                             className="form-control"
                                             id="message-text">
-
                                         </textarea>
                                     </div>
 
