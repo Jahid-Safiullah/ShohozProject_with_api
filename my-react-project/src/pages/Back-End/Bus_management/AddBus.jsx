@@ -9,49 +9,45 @@ import axios from 'axios';
 
 
 export default function AddBus() {
-
-
-
   const [bus_name, setName] = useState('');
-    const [code, setCode] = useState('');
-    const [file, setFile] = useState('');
-    const [operator_id, setOperatorName] = useState('');
+  const [code, setCode] = useState('');
+  const [file, setFile] = useState(null);
+  const [operator_id, setOperatorName] = useState('');
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+  const handleFileChange = (e) => {
+      setFile(e.target.files[0]);
+  };
 
-        if (!bus_name || !code  || !file || !operator_id) {
-            alert("Please fill in all fields");
-            return;
-        }
-        //let item = { name, email, phone, address, logo };
+  const handleSubmit = async (event) => {
+      event.preventDefault();
 
-        const formData = new FormData();
-        formData.append('bus_name', bus_name);
-        formData.append('code', code);
-        formData.append('file', file);
-        formData.append('operator-id', operator_id);
+      if (!bus_name || !code || !file || !operator_id) {
+          alert('Please fill in all fields');
+          return;
+      }
 
+      const formData = new FormData();
+      formData.append('bus_name', bus_name);
+      formData.append('code', code);
+      formData.append('file', file);
+      formData.append('operator-id', operator_id);
 
-        try {
-            const response = await axios.post('http://localhost:8000/api/add-Operator',
-                formData,
-                {
-                    headers:
-                    {
-                        "Content-type": "multipart/form-data",
-                    },
-                }
-            );
-            console.log('response:', response.data);
-        }
-        catch (error) {
-
-            console.error('Error:', error);
-        }
-    }
-
-
+      try {
+          const response = await axios.post(
+              'http://localhost:8000/api/add-Bus',
+              formData,
+              {
+                  headers: {
+                      'Content-type': 'multipart/form-data',
+                  },
+              }
+          );
+          console.log('Response:', response.data);
+      } catch (error) {
+          console.error('Error submitting form:', error);
+          // Handle the error (display a message, etc.)
+      }
+  };
 
 
   return (
@@ -295,15 +291,15 @@ export default function AddBus() {
                             </div>
                             <div className="modal-body">
                                 <form onSubmit={handleSubmit} encType="multipart/form-data" >
-
+                              
                                     <div className="mb-3">
-                                        <label htmlFor="recipient-name" className="col-form-label">Bus Name:</label>
+                                        <label htmlFor="bus-name" className="col-form-label">Bus Name:</label>
                                         <input
                                             value={bus_name}
                                             onChange={(e) => setName(e.target.value)}
                                             type="text"
                                             className="form-control"
-                                            id="recipient-name" />
+                                            id="bus-name" />
                                     </div>
                                     
                                     <div className="mb-3">
@@ -318,10 +314,11 @@ export default function AddBus() {
                                     <div className="mb-3">
                                         <label htmlFor="bus-image" className="col-form-label">Image:</label>
                                         <input
-                                            onChange={(e) => setFile(e.target.files[0])}
-                                            type="file"
-                                            className="form-control"
-                                            id="bus-image" />
+                                              onChange={handleFileChange}
+                                              type="file"
+                                              className="form-control"
+                                              id="bus-image"
+                                          />
                                     </div>
                                     <div className="mb-3">
                                         <label htmlFor="bus-operator-name" className="col-form-label">Operator Name:</label>

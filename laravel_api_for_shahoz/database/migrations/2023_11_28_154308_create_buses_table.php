@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("code");
             $table->string("image")->nullable();
             $table->integer("operator_id");
-            $table->integer("total_seats")->default(40);
+            $table->integer("total_seats")->nullable()->default('40');
             $table->boolean("status")->default(1);
             $table->timestamps();
         });

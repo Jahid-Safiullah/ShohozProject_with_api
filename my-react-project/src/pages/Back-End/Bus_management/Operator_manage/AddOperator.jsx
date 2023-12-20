@@ -75,7 +75,7 @@ const AddOperator = () => {
 
 
         try {
-            const response = await axios.post('http://localhost:8000/api/add-Bus',
+            const response = await axios.post('http://localhost:8000/api/add-Operator',
                 formData,
                 {
                     headers:

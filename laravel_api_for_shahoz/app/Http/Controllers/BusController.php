@@ -8,26 +8,35 @@ use App\Models\Bus;
 class BusController extends Controller
 {
     public function add_bus(Request $request){
-
+         // Debugging statements
+    dd($request->all()); // Dump the request data
         // $request->validate([
         //     'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         // ]);
 
-        $operator= new Bus;
-        $operator->bus_name=$request->bus_name;
-        $operator->code=$request->code;
-        $operator->operator_id=$request->operator_id;
-        // $operator->operator_logo = $request->file('images')->store("operator_images");
+        $bus= new Bus;
+        $bus->bus_name=$request->bus_name;
+        $bus->code=$request->code;
+        $bus->operator_id=$request->operator_id;
+        // $bus->bus_logo = $request->file('images')->store("bus_images");
 
-        // $image = $request->file;
+        // $image = $request->file('image');
         // $imageName = time() . '.' . $image->getClientOriginalExtension();
         // $request->file->move('Bus_images', $imageName);
-        // $operator->operator_logo=$imageName;
+        // $bus->image=$imageName;
 
-        // $operator->total_seats=$request->total_seats;
+        $image = $request->file('image');
+        if ($image) {
+            // If an image is present, proceed with processing
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move('bus_images', $imageName);
+            $bus->image = $imageName;
+        } 
 
-        $operator->save();
-        return $operator;
+        $bus->total_seats = $request->total_seats ?? 40;
+
+        $bus->save();
+        return $bus;
     }
 
 }
