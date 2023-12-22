@@ -7,23 +7,13 @@ use App\Models\Bus;
 
 class BusController extends Controller
 {
-    public function add_bus(Request $request){
-         // Debugging statements
-    dd($request->all()); // Dump the request data
-        // $request->validate([
-        //     'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        // ]);
+    public function addBus(Request $request){
 
+        \Log::info('Request received:', $request->all());
         $bus= new Bus;
         $bus->bus_name=$request->bus_name;
         $bus->code=$request->code;
         $bus->operator_id=$request->operator_id;
-        // $bus->bus_logo = $request->file('images')->store("bus_images");
-
-        // $image = $request->file('image');
-        // $imageName = time() . '.' . $image->getClientOriginalExtension();
-        // $request->file->move('Bus_images', $imageName);
-        // $bus->image=$imageName;
 
         $image = $request->file('image');
         if ($image) {
@@ -31,12 +21,16 @@ class BusController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move('bus_images', $imageName);
             $bus->image = $imageName;
-        } 
+        }
 
         $bus->total_seats = $request->total_seats ?? 40;
 
         $bus->save();
-        return $bus;
+        return response()->json(['message' => 'Data saved successfully']);
+    }
+    public function ViewBus(){
+        $busList=Bus::all();
+        return $busList;
     }
 
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string("bus_name");
             $table->string("code");
             $table->string("image")->nullable();
-            $table->integer("operator_id");
+            $table->integer("operator_id")->nullable();
             $table->integer("total_seats")->nullable()->default('40');
             $table->boolean("status")->default(1);
             $table->timestamps();

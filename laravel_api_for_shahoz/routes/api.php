@@ -28,7 +28,8 @@ Route::get('/view-Operator', [OperatorController::class,'viewOperator']);
 Route::delete('/delete-Operator/{id}', [OperatorController::class,'deleteOperator']);
 
 
-Route::post('/add-Bus', [BusController::class,'add_bus']);
+Route::post('/add-Bus', [BusController::class,'addBus']);
+Route::get('/view-bus', [BusController::class,'ViewBus']);
 
 
 

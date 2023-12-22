@@ -6,11 +6,11 @@ import axios from 'axios';
 
 
 
-const AddBus = () => {
+const ViewBus = () => {
 
 
 
-    //--------------------------------this for get operator-----------------------------------------------------------
+    //--------------------------------this for get Bus-----------------------------------------------------------
 
 
     const [data, setData] = useState([]);
@@ -18,7 +18,7 @@ const AddBus = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let result = await fetch("http://localhost:8000/api/view-Operator");
+                let result = await fetch("http://localhost:8000/api/view-bus");
                 result = await result.json();
                 setData(result);
                 //   console.warn("result", result);
@@ -33,7 +33,7 @@ const AddBus = () => {
 
 
 
-    //--------------------------------this for Delete operator-----------------------------------------------------------
+    //--------------------------------this for Delete Bus-----------------------------------------------------------
 
     async function deleteOperation(e, id) {
         e.preventDefault();
@@ -50,48 +50,45 @@ const AddBus = () => {
 
 
 
-    //-------------------------------this for post operator------------------------------------------------------------
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [address, setAddress] = useState('');
-    const [file, setFile] = useState('');
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        if (!name || !email || !phone || !address || !file) {
-            alert("Please fill in all fields");
-            return;
-        }
-        //let item = { name, email, phone, address, logo };
-
+    //-------------------------------this for post Bus------------------------------------------------------------
+    const [bus_name, setName] = useState('');
+    const [code, setCode] = useState('');
+    const [file, setFile] = useState(null);
+    const [operator_id, setOperatorId] = useState('');
+  
+    const handleFileChange = (e) => {
+      setFile(e.target.files[0]);
+    };
+  
+  
+      
+      async function submite() {
+        console.warn(bus_name, code, file, operator_id);
         const formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('phone', phone);
-        formData.append('address', address);
-        formData.append('file', file);
-
-
+        formData.append('bus_name', bus_name);
+        formData.append('code', code);
+        formData.append('image', file);
+        formData.append('operator_id', operator_id);
         try {
-            const response = await axios.post('http://localhost:8000/api/add-Operator',
-                formData,
-                {
-                    headers:
-                    {
-                        "Content-type": "multipart/form-data",
-                    },
-                }
-            );
-            console.log('response:', response.data);
+          const response = await fetch('http://localhost:8000/api/add-Bus', {
+            method: 'POST',
+            body: formData,
+          });
+      
+          if (!response.ok) {
+            const text = await response.text();
+            console.error('Error submitting form:', text);
+            return;
+          }
+      
+          const data = await response.json();
+          alert('Data has been saved successfully');
+        } catch (error) {
+          console.error('Error submitting form:', error);
         }
-        catch (error) {
-
-            console.error('Error:', error);
-        }
-    }
-
+      }
+      
+  
 
     return (
         <div>
@@ -112,9 +109,10 @@ const AddBus = () => {
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Phone</th>
-                                    <th scope="col">Logo</th>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Seats</th>
+                                    <th scope="col">Operator_id</th>
+                                    <th scope="col">Bus Image</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -127,16 +125,19 @@ const AddBus = () => {
                                                 {item.id}
                                             </th>
                                             <td>
-                                                {item.operator_name}
+                                                {item.bus_name}
                                             </td>
                                             <td>
-                                                {item.operator_email}
+                                                {item.code}
                                             </td>
                                             <td>
-                                                {item.operator_phone}
+                                                {item.total_seats}
                                             </td>
                                             <td>
-                                                <img width="100px" height="100px" src={`http://127.0.0.1:8000/${item.operator_logo}`} alt="" />
+                                                {item.operator_id}
+                                            </td>
+                                            <td>
+                                                <img width="100px" height="100px" src={`http://127.0.0.1:8000/${item.image}`} alt="" />
 
                                             </td>
                                             <td>
@@ -155,61 +156,71 @@ const AddBus = () => {
 
 
 
-                {/* Modal */}
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
+            {/* Start Bus Modal */}
+            <div className="modal fade" id="busModel" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                    <div className="modal-header">
 
-                                <h1 className="modal-title fs-5" id="exampleModalLabel">Add Bus</h1>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                <form onSubmit={handleSubmit} encType="multipart/form-data" >
-                                    <div className="mb-3">
-                                        <label htmlFor="recipient-name" className="col-form-label">Bus Name:</label>
-                                        <input
-                                            value={name}
-                                            onChange={(e) => setName(e.target.value)}
-                                            type="text"
-                                            className="form-control"
-                                            id="recipient-name" />
-                                    </div>
-                                    
-                                    <div className="mb-3">
-                                        <label htmlFor="bus-licence" className="col-form-label">Bus Licence</label>
-                                        <input
-                                            value={licence}
-                                            onChange={(e) => setPhone(e.target.value)}
-                                            type="text"
-                                            className="form-control"
-                                            id="bus-licence" />
-                                    </div>
-                                    <div className="mb-3">
-                                        <label htmlFor="bus-image" className="col-form-label">Image:</label>
-                                        <input
+                        <h1 className="modal-title fs-5" id="exampleModalLabel">Add Bus</h1>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body">
+                    
 
-
-                                            onChange={(e) => setFile(e.target.files[0])}
-                                            type="file"
-                                            className="form-control"
-                                            id="bus-image" />
-                                    </div>
-
-                                   
-
-                                    <div className="modal-footer">
-                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" className="btn btn-primary">Submit</button>
-                                    </div>
-                                </form>
-                            </div>
+                        <div className="mb-3">
+                        <label htmlFor="bus-name" className="col-form-label">Bus Name:</label>
+                        <input
+                            value={bus_name}
+                            onChange={(e) => setName(e.target.value)}
+                            type="text"
+                            className="form-control"
+                            id="bus-name" />
                         </div>
+
+                        <div className="mb-3">
+                        <label htmlFor="bus-licence" className="col-form-label">Bus Licence</label>
+                        <input
+                            value={code}
+                            onChange={(e) => setCode(e.target.value)}
+                            type="text"
+                            className="form-control"
+                            id="bus-licence" />
+                        </div>
+                        <div className="mb-3">
+                        <label htmlFor="bus-image" className="col-form-label">Image:</label>
+                        <input
+                            onChange={handleFileChange}
+                            type="file"
+                            className="form-control"
+                            id="bus-image"
+                        />
+                        </div>
+                        <div className="mb-3">
+                        <label htmlFor="bus-operator-name" className="col-form-label">Operator Name:</label>
+                        <input
+                            value={operator_id}
+                            onChange={(e) => setOperatorId(e.target.value)}
+                            type="text"
+                            className="form-control"
+                            id="bus-operator-name" />
+                        </div>
+
+                        <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" onClick={submite} className="btn btn-primary">Submit</button>
+                        </div>
+                
+                    </div>
                     </div>
                 </div>
+                </div>
+                {/* End Bus Model */}
+
+                
             </div>
         </div>
     );
 };
 
-export default AddBus;
+export default ViewBus;

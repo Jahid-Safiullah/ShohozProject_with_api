@@ -18,6 +18,7 @@ import Logout from './pages/Back-End/Logout'
 import BackendHome from './pages/Back-End/Home'
 import BusBookingList from './Back-End-Component/BUS/BusBookingList'
 import EditBus from './Back-End-Component/BUS/EditBus';
+import ViewBus from './pages/Back-End/Bus_management/Bus/viewBus'
 import Protected from "./pages/Back-End/Protected";
 import AddOperator from './pages/Back-End/Bus_management/Operator_manage/AddOperator'
 import {
@@ -60,8 +61,9 @@ export default function App() {
           <Route path="/AddOperator" element={<Protected Cmp={AddOperator} />} />
           <Route path="/BusBookingList" element={<Protected Cmp={AddBus} />} >
             <Route path="/BusBookingList/EditBus/:id" element={<Protected Cmp={EditBus} />} />
-            
+           
           </Route>
+          <Route path="/BusBookingList/ViewBus" element={<Protected Cmp={ViewBus} />} />
           <Route path="/LaunchManagment" element={<Protected Cmp={AddLaunch} />} />
           <Route path="/Logout" element={<Protected Cmp={Logout} />} />
 
