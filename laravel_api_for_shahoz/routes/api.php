@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\BusController;
+use App\Http\Controllers\RouteController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,5 +32,8 @@ Route::delete('/delete-Operator/{id}', [OperatorController::class,'deleteOperato
 Route::post('/add-Bus', [BusController::class,'addBus']);
 Route::get('/view-bus', [BusController::class,'ViewBus']);
 
+
+Route::post('/add_Route', [RouteController::class,'add_Route']);
+Route::get('/view-Route', [RouteController::class,'view_Route']);
 
 
