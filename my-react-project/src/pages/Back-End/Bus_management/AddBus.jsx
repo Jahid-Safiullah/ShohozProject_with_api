@@ -7,9 +7,9 @@ import axios from 'axios';
 
 
 
-
+// console.log(operators);
 export default function AddBus() {
-
+  
   //-------------------------------this for Add operator------------------------------------------------------------
   const [name, setNameOperator] = useState('');
   const [email, setEmail] = useState('');
@@ -61,14 +61,30 @@ export default function AddBus() {
   const [code, setCode] = useState('');
   const [file, setFile] = useState(null);
   const [operator_id, setOperatorId] = useState('');
+// Assuming you have a state variable to store the list of operators
+  const [operators, setOperators] = useState([]);
+
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
-
+  useEffect(() => {
+    // Fetch operators
+    axios.get('http://localhost:8000/api/view-Operator')
+      .then(response => {
+        setOperators(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching operators:', error);
+      });
+  }, []);
 
   async function submite() {
+    if (!bus_name || !code || !file || !operator_id ) {
+      alert("Please fill in all fields");
+      return;
+    }
     console.warn(bus_name, code, file, operator_id);
     const formData = new FormData();
     formData.append('bus_name', bus_name);
@@ -98,13 +114,68 @@ export default function AddBus() {
    // ----------------------------------------------Add Route----------------------------------------
    const [from, setFrom] = useState('');
    const [to, setTo] = useState('');
-   const [bus, setBus] = useState(null);
+   const [bus, setBus] = useState('');
    const [cost, setCost] = useState('');
    const [departureDate, setDepartureDate] = useState('');
    const [departureTime, setDepartureTime] = useState('');
- 
+   const [districts, setDistricts] = useState([]);
+   const [loading, setLoading] = useState(true);
+   const [fatchBuses, setFatchBuses] = useState([]);
+  
+   // State for tracking error, if any
+   const [error, setError] = useState(null);
 
- 
+
+  //Start Fetch district-------
+    useEffect(() => {
+      setLoading(true);
+      axios.get('http://localhost:8000/api/view_District')
+        .then(response => {
+          console.log('Districts API Response:', response.data);
+          setDistricts(response.data.data);//i don't this code why??// // Access districts inside 'data'
+        })
+        .catch(error => {
+          console.error('Error fetching District:', error);
+          setDistricts([]);// Set to an empty array or handle the error accordingly
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }, []);
+ //End Fetch District---------
+
+ //start Fetch bus---------
+      // useEffect(()=>{
+      //   axios.get('http://localhost:8000/api/view-bus').then(response=>{
+      //     console.log('Bus API Response:', response.data);
+      //     setBuses(response.data.data);
+      //   }).catch(error=>{console.error('Error fetching Bus:',error);
+      //   setBuses([]);// Set to an empty array or handle the error accordingly
+      // });
+        
+      // },[]);
+      useEffect(() => {
+        // Function to fetch bus data
+        const fetchBusData = async () => {
+          try {
+            const response = await axios.get('http://localhost:8000/api/view-bus');
+            console.log('Bus API Response:', response.data);
+            setFatchBuses(response.data.data);
+          } catch (error) {
+            console.error('Error fetching Bus:', error);
+            setError(error.message || 'An error occurred while fetching bus data.');
+          } finally {
+            setLoading(false); // Set loading to false regardless of success or error
+          }
+        };
+    
+        // Call the fetchBusData function
+        fetchBusData();
+      }, []); // The empty dependency array ensures that this effect runs once when the component mounts
+    
+
+ //End Fetch bus---------
+
    async function RoteSubmite() {
      console.warn(from, to, bus,cost, departureDate, departureTime);
      const formData = new FormData();
@@ -115,7 +186,7 @@ export default function AddBus() {
      formData.append('departureDate', departureDate);
      formData.append('departureTime', departureTime);
      try {
-       const response = await fetch('http://localhost:8000/api/view-Route', {
+       const response = await fetch('http://localhost:8000/api/add_Route', {
          method: 'POST',
          body: formData,
        });
@@ -133,7 +204,7 @@ export default function AddBus() {
      }
    }
  
-
+ 
   return (
     <>
       <div className='container-fluid d-flex' >
@@ -344,7 +415,7 @@ export default function AddBus() {
 
                   </th>
                   <td>
-
+                      {loading ?(<p>Loading....</p>):(<ul>{districts.map(district=>(<li key={district.id}>{district.name}</li>))}</ul>)}
                   </td>
                   <td>
 
@@ -503,12 +574,26 @@ export default function AddBus() {
                 </div>
                 <div className="mb-3">
                   <label htmlFor="bus-operator-name" className="col-form-label">Operator Name:</label>
-                  <input
+                  {/* <input
                     value={operator_id}
                     onChange={(e) => setOperatorId(e.target.value)}
                     type="number"
                     className="form-control"
-                    id="bus-operator-name" />
+                    id="bus-operator-name" /> */}
+                  
+                     <select
+                        value={operator_id}
+                        onChange={(e) => setOperatorId(e.target.value)}
+                        className="form-control"
+                        id="bus-operator-name"
+                      >
+                        <option value="">Select Operator</option>
+                        {operators.map(operator => (
+                          <option key={operator.id} value={operator.id}>
+                            {operator.operator_name}
+                          </option>
+                        ))}
+                      </select>
                 </div>
 
                 <div className="modal-footer">
@@ -522,7 +607,10 @@ export default function AddBus() {
         </div>
         {/* End Bus Model */}
 
+
+ 
         {/* Start Rotue Modal */}
+
         <div className="modal fade" id="routeModel" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
@@ -536,33 +624,77 @@ export default function AddBus() {
 
                 <div className="mb-3">
                   <label htmlFor="form" className="col-form-label">From :</label>
-                  <input
+                  {/* <input
                     value={from}
                     onChange={(e) => setFrom(e.target.value)}
                     type="text"
                     className="form-control"
-                    id="from" />
+                    id="from" /> */}
+
+                    
+                      <select
+                        value={from}
+                        onChange={(e) => setFrom(e.target.value)}
+                        className="form-control"
+                        id="form"
+                      >
+                        <option value="">Select From District</option>
+                        {districts.map(district => (
+                          <option key={district.id} value={district.name}>
+                            {district.name}
+                          </option>
+                        ))}
+                      </select>
                 </div>
 
                 <div className="mb-3">
                   <label htmlFor="to" className="col-form-label">To : </label>
-                  <input
+                  {/* <input
                     value={to}
                     onChange={(e) => setTo(e.target.value)}
                     type="text"
                     className="form-control"
-                    id="to" />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="bus" className="col-form-label">Bus:</label>
-                  <input
-                    value={bus}
-                    onChange={(e) => setBus(e.target.value)}
-                    type="text"
-                    className="form-control"
-                    id="bus" />
+                    id="to" /> */}
+
+                      <select
+                        value={to}
+                        onChange={(e) => setTo(e.target.value)}
+                        className="form-control"
+                        id="to"
+                      >
+                        <option value="">Select To District</option>
+                        {districts.map(district => (
+                          <option key={district.id} value={district.name}>
+                            {district.name}
+                          </option>
+                        ))}
+                      </select>
+
                 </div>
 
+                
+                <div className="mb-3">
+                  <label htmlFor="bus" className="col-form-label">Bus:</label>
+                  
+                  {fatchBuses ? (
+                    <select
+                      value={bus}
+                      onChange={(e) => setBus(e.target.value)}
+                      className="form-control"
+                      id="bus"
+                    >
+                      <option value="">Select Operator</option>
+                      {fatchBuses.map((fatchBus) => (
+                        <option key={fatchBus.id} value={fatchBus.id}>
+                          {fatchBus.bus_name}
+                        </option>
+                      ))}
+                    </select>
+                    ) : (
+                      <p>Loading buses...</p>
+                    )}
+                </div>
+     
                 <div className="mb-3">
                   <label htmlFor="cost" className="col-form-label">Cost :</label>
                   <input
@@ -602,10 +734,11 @@ export default function AddBus() {
             </div>
           </div>
         </div>
-        {/* End Bus Model */}
-
-        {/* Start Bus Modal */}
-        <div className="modal fade" id="busModel" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ 
+        {/* End Route Model */}
+       
+        {/* Start Booking Modal */}
+        <div className="modal fade" id="bookingModel" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
@@ -663,8 +796,9 @@ export default function AddBus() {
             </div>
           </div>
         </div>
-        {/* End Bus Model */}
+        {/* End Booking Model */}
       </div>
     </>
   )
+
 }

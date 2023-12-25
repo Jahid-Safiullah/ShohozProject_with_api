@@ -5,13 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Operator extends Model
+class District extends Model
 {
-    protected $guarded = [];
     use HasFactory;
-
-    public function buses()
-    {
-        return $this->hasMany(Bus::class);
-    }
+    protected $fillable = ['name'];
 }

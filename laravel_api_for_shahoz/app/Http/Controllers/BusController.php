@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Bus;
+use App\Models\Operator;
 
 class BusController extends Controller
 {
     public function addBus(Request $request){
 
         \Log::info('Request received:', $request->all());
+        $operator=Operator::all();
         $bus= new Bus;
         $bus->bus_name=$request->bus_name;
         $bus->code=$request->code;

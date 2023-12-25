@@ -22,6 +22,7 @@ import ViewBus from './pages/Back-End/Bus_management/Bus/viewBus';
 import View_Route from './pages/Back-End/Bus_management/Route/View_Route'
 import Protected from "./pages/Back-End/Protected";
 import AddOperator from './pages/Back-End/Bus_management/Operator_manage/AddOperator'
+import BusSearchResults from './Front-End-Component/Form/BusSearchResults'
 import {
   BrowserRouter,
   Routes,
@@ -46,7 +47,15 @@ export default function App() {
           <Route path="/Bus" element={<Bus />} />
           {/* <Route path="/BookingDetails" element={<BookingDetails />}/>
                    </Route> */}
-
+          {/* {location.state?.searchResults && (
+            <Route
+              path="/search_results"
+              element={<BusSearchResults searchResults={location.state.searchResults} />}
+            />
+          )}
+           </Route> */}
+           {/* <Route path="/search_results" element={<BusSearchResults searchResults={location.state.searchResults}/>} /> */}
+           <Route path="/search_results" element={<BusSearchResults />} />
           <Route path="/Launch" element={<Launch />} />
           <Route path="/Train" element={<Train />} />
           <Route path="/Registraion" element={<Registraion />} />
@@ -62,7 +71,7 @@ export default function App() {
           <Route path="/AddOperator" element={<Protected Cmp={AddOperator} />} />
           <Route path="/BusBookingList" element={<Protected Cmp={AddBus} />} >
             <Route path="/BusBookingList/EditBus/:id" element={<Protected Cmp={EditBus} />} />
-           
+
           </Route>
           <Route path="/BusBookingList/ViewBus" element={<Protected Cmp={ViewBus} />} />
           <Route path="/BusBookingList/View_Route" element={<Protected Cmp={View_Route} />} />
@@ -72,7 +81,7 @@ export default function App() {
           {/* <Route path="/TrainManagement" element={<TrainManagement />} /> */}
 
         </Routes>
-        
+
 
       </BrowserRouter>
 

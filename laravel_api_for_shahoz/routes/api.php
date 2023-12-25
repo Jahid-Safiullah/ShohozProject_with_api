@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\RouteController;
+use App\Http\Controllers\DistrictController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,7 +33,7 @@ Route::delete('/delete-Operator/{id}', [OperatorController::class,'deleteOperato
 Route::post('/add-Bus', [BusController::class,'addBus']);
 Route::get('/view-bus', [BusController::class,'ViewBus']);
 
-
+Route::get('/view_District', [DistrictController::class,'index']);
 Route::post('/add_Route', [RouteController::class,'add_Route']);
 Route::get('/view-Route', [RouteController::class,'view_Route']);
 
