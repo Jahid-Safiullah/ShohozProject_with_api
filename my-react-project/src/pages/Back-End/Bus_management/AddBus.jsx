@@ -160,7 +160,7 @@ export default function AddBus() {
           try {
             const response = await axios.get('http://localhost:8000/api/view-bus');
             console.log('Bus API Response:', response.data);
-            setFatchBuses(response.data.data);
+            setFatchBuses(response.data);
           } catch (error) {
             console.error('Error fetching Bus:', error);
             setError(error.message || 'An error occurred while fetching bus data.');

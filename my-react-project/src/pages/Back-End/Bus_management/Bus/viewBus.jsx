@@ -55,12 +55,24 @@ const ViewBus = () => {
     const [code, setCode] = useState('');
     const [file, setFile] = useState(null);
     const [operator_id, setOperatorId] = useState('');
-  
+    // Assuming you have a state variable to store the list of operators
+    const [operators, setOperators] = useState([]);
+
     const handleFileChange = (e) => {
       setFile(e.target.files[0]);
     };
   
-  
+    useEffect(() => {
+        // Fetch operators
+        axios.get('http://localhost:8000/api/view-Operator')
+          .then(response => {
+            setOperators(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching operators:', error);
+          });
+      }, []);
+    
       
       async function submite() {
         console.warn(bus_name, code, file, operator_id);
@@ -100,7 +112,7 @@ const ViewBus = () => {
                 <div className='bg-white col-md-9' style={{ marginTop: "88px" }} >
 
                     <div className="text-end p-3">
-                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Add Operator</button>
+                        <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#busModel" data-bs-whatever="@getbootstrap">Add Bus</button>
                     </div>
 
                     <div className='p-4 table-responsive-lg card' >
@@ -152,6 +164,10 @@ const ViewBus = () => {
                         </table>
                     </div>
 
+                    <button className='mt-2 rounded '>
+                    <Link to="/BusBookingList"><i class="fa-solid fa-backward fa-xl"></i>Back</Link>
+                    </button>
+
                 </div>
 
 
@@ -198,12 +214,26 @@ const ViewBus = () => {
                         </div>
                         <div className="mb-3">
                         <label htmlFor="bus-operator-name" className="col-form-label">Operator Name:</label>
-                        <input
+                        {/* <input
                             value={operator_id}
                             onChange={(e) => setOperatorId(e.target.value)}
                             type="text"
                             className="form-control"
-                            id="bus-operator-name" />
+                            id="bus-operator-name" /> */}
+                                <select
+                                    value={operator_id}
+                                    onChange={(e) => setOperatorId(e.target.value)}
+                                    className="form-control"
+                                    id="bus-operator-name"
+                                >
+                                    <option value="">Select Operator</option>
+                                    {operators.map(operator => (
+                                    <option key={operator.id} value={operator.id}>
+                                        {operator.operator_name}
+                                    </option>
+                                    ))}
+                                </select>
+
                         </div>
 
                         <div className="modal-footer">
@@ -214,6 +244,7 @@ const ViewBus = () => {
                     </div>
                     </div>
                 </div>
+                   
                 </div>
                 {/* End Bus Model */}
 

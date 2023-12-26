@@ -56,15 +56,14 @@ export default function BookingForm() {
     // Cleanup function to clear the timer on component unmount or input change
     return () => clearTimeout(delayTimer);
   }, [destFrom, destTo, doj, dor]);
-
   // Function to handle the search button click
   const handleSearch = () => {
     // Navigate to the search results page with the updated search results
     navigate('/search_results', {
       state: { searchResults },
+
     });
   };
-
   return (
     <div>
       <div className="form-group flex-fill bd-highlight ms-5 text-start fw-bold" style={{ marginTop: '10px' }}>

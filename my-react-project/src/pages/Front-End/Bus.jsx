@@ -8,6 +8,8 @@ import Buy_bus_tickets_in_3_easy_steps from '../../Front-End-Component/Body/Buy_
 
 import Profile from '../../Front-End-Component/Body/Profile';
 import Footer from '../../Front-End-Component/footer/Footer';
+import ViewRouteForFront from '../../Front-End-Component/BusRoute/ViewRouteForFront'
+
 export default function Bus() {
   return (
     <div>
@@ -39,8 +41,9 @@ export default function Bus() {
       <div>
         <BeforSeatBookingCarousel />
       </div>
-
+      <ViewRouteForFront />
       <Profile />
+     
       <div><Footer /></div>
 
 

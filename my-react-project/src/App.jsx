@@ -55,7 +55,7 @@ export default function App() {
           )}
            </Route> */}
            {/* <Route path="/search_results" element={<BusSearchResults searchResults={location.state.searchResults}/>} /> */}
-           <Route path="/search_results" element={<BusSearchResults />} />
+           <Route path="/search_results" element={<BusSearchResults searchResults={'searchResults'} />} />
           <Route path="/Launch" element={<Launch />} />
           <Route path="/Train" element={<Train />} />
           <Route path="/Registraion" element={<Registraion />} />
